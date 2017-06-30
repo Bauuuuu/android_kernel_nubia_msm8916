@@ -127,6 +127,11 @@ config SENSORS_ADCXX
 	  This driver can also be built as a module.  If so, the module
 	  will be called adcxx.
 
+config NUBIA_LIQUID_LED
+	tristate "aw9106b i2c led"
+	depends on I2C
+	help
+	  if you say use aw9106b, select it.
 config SENSORS_ADM1021
 	tristate "Analog Devices ADM1021 and compatibles"
 	depends on I2C
