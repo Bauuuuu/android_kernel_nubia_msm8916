@@ -146,6 +146,7 @@ obj-$(CONFIG_SENSORS_EPM_ADC)	+= epm_adc.o
 obj-$(CONFIG_SENSORS_QPNP_ADC_VOLTAGE)	+= qpnp-adc-voltage.o qpnp-adc-common.o
 obj-$(CONFIG_SENSORS_QPNP_ADC_CURRENT)	+= qpnp-adc-current.o qpnp-adc-common.o
 obj-$(CONFIG_SENSORS_BOOST_DYNAMIC_CONTROLLER)	+= boost-dynamic-controller.o
+obj-$(CONFIG_NUBIA_SENSORS_LSM6DX0)		+= lsm6dx0.o
 obj-$(CONFIG_NUBIA_SENSORS_COMPASS_AKM09911)   += akm09911.o
 obj-$(CONFIG_NUBIA_SENSORS_HALL_DEVICE)  	+= hall_device.o
 
