@@ -138,9 +138,9 @@
 			"FLASH_NOW";
 		qcom,cci-master = <0>;
 	};
-	eeprom0: qcom,eeprom@34 {
-		cell-index = <0>;
-		reg = <0x34>;
+	eeprom0: qcom,eeprom@0 {
+		cell-index = <2>;
+		reg = <0x20>;
 		qcom,eeprom-name = "imx234_bu64297gwz";
 		compatible = "qcom,eeprom";
 		qcom,i2c-freq-mode = <1>;
@@ -220,9 +220,9 @@
 				<&clock_gcc clk_gcc_camss_mclk0_clk>;
 		clock-names = "cam_src_clk", "cam_clk";
 	};
-	eeprom1: qcom,eeprom@20 {
+	eeprom1: qcom,eeprom@1 {
 		cell-index = <1>;
-		reg = <0x20>;
+		reg = <0x01>;
 		qcom,eeprom-name = "imx179_mcnex";
 		compatible = "qcom,eeprom";
 		zte,num-custom = <7>;
