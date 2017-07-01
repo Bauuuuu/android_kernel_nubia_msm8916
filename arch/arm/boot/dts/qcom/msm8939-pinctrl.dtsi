@@ -259,6 +259,26 @@
 			};
 		};
 
+		// ztemt add by zhubing start
+		// add i2c qup3 (gpio10 gpio11)
+		pmx_i2c_3 {
+			qcom,pins = <&gp 10>, <&gp 11>; /* SDA, SCL */
+			qcom,num-grp-pins = <2>;
+			qcom,pin-func = <2>;
+			label = "pmx_i2c_3";
+
+			i2c_3_active: i2c_3_active {
+				drive-strength = <2>;
+				bias-disable;
+			};
+
+			i2c_3_sleep: i2c_3_sleep {
+				drive-strength = <2>;
+				bias-disable;
+			};
+		};
+		// ztemt add by zhubing end
+
 		pmx_i2c_4 {
 			qcom,pins = <&gp 14>, <&gp 15>; /* SDA, SCL */
 			qcom,num-grp-pins = <2>;
