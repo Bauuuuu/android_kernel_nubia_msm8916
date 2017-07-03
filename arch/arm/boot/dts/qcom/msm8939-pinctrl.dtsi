@@ -74,7 +74,8 @@
 				bias-disable; /* No PULL */
 			};
 		};
-
+//ztemt changed by chengdongsheng ALL REMOVERD TO qcom/zte/project/xxx-nfc-pinctrl.dtsi
+/*
 		pmx_rd_nfc_int{
 			qcom,pins = <&gp 21>;
 			qcom,pin-func = <0>;
@@ -108,7 +109,9 @@
 				bias-disable;
 			};
 		};
-
+*/
+/*comment by congshan start*/
+/*
 		blsp1_uart1_active {
 			qcom,pins = <&gp 0>, <&gp 1>, <&gp 2>, <&gp 3>;
 			qcom,num-grp-pins = <4>;
@@ -132,6 +135,8 @@
 			        bias-disable;
 			};
 		};
+*/
+/*comment by congshan end*/
 
 		sdhc2_cd_pin {
 			qcom,pins = <&gp 38>;
@@ -468,11 +473,11 @@
 			        bias-pull-up; /* PULL UP */
 			};
 		};
-
+// ztemt start: use qcom key config as nubia default key config
 		tlmm_gpio_key {
-			qcom,pins = <&gp 107>, <&gp 108>, <&gp 109>;
+			qcom,pins = <&gp 107>, <&gp 108>;
 			qcom,pin-func = <0>;
-			qcom,num-grp-pins = <3>;
+			qcom,num-grp-pins = <2>;
 			label = "tlmm_gpio_key";
 			gpio_key_active: gpio_key_active {
 				drive-strength = <2>;
@@ -483,6 +488,7 @@
 				bias-pull-up;
 			};
 		};
+// ztemt end
 
 		/* add pingrp for touchscreen */
 		pmx_ts_int_active {
@@ -1029,11 +1035,12 @@
 				bias-pull-down; /* PULL DOWN */
 			};
 		};
-
+/*comment by congshan start*/
+#if 0
 		cam_sensor_rear {
 			/* RESET, STANDBY */
-			qcom,pins =  <&gp 35>, <&gp 34>;
-			qcom,num-grp-pins = <2>;
+			qcom,pins =  <&gp 35>, <&gp 34>, <&gp 0>, <&gp 1>, <&gp 3>; /*add gp 0 1 3 by congshan */
+			qcom,num-grp-pins = <5>;
 			qcom,pin-func = <0>;
 			label = "cam-sensor-rear";
 			/* active state */
@@ -1045,8 +1052,8 @@
 
 		cam_sensor_rear_sleep {
 			/* RESET, STANDBY */
-			qcom,pins =  <&gp 35>, <&gp 34>;
-			qcom,num-grp-pins = <2>;
+			qcom,pins =  <&gp 35>, <&gp 34>, <&gp 0>, <&gp 1>, <&gp 3>; /*add gp 0 1 3 by congshan */
+			qcom,num-grp-pins = <5>;
 			qcom,pin-func = <0>;
 			label = "cam-sensor-rear-sleep";
 			/*suspend state */
@@ -1058,8 +1065,8 @@
 
 		cam_sensor_front {
 			/* RESET, STANDBY */
-			qcom,pins = <&gp 28>, <&gp 33>;
-			qcom,num-grp-pins = <2>;
+			qcom,pins = <&gp 28>, <&gp 33>, <&gp 2>, <&gp 16>, <&gp 109>; /*add gp 2 16 109 by congshan */
+			qcom,num-grp-pins = <5>;
 			qcom,pin-func = <0>;
 			label = "cam_sensor_front";
 			/* active state */
@@ -1071,8 +1078,8 @@
 
 		cam_sensor_front_sleep {
 			/* RESET, STANDBY */
-			qcom,pins = <&gp 28>, <&gp 33>;
-			qcom,num-grp-pins = <2>;
+			qcom,pins = <&gp 28>, <&gp 33>, <&gp 2>, <&gp 16>, <&gp 109>; /*add gp 2 16 109 by congshan */
+			qcom,num-grp-pins = <5>;
 			qcom,pin-func = <0>;
 			label = "cam_sensor_front_sleep";
 			/*suspend state */
@@ -1084,8 +1091,8 @@
 
 		cam_sensor_flash {
 			/* FLSH_RESET,FLASH_EN,FLASH_NOW */
-			qcom,pins = <&gp 36>, <&gp 31>,<&gp 32> ;
-			qcom,num-grp-pins = <3>;
+			qcom,pins =  <&gp 31>,<&gp 32> ;//change by congshan
+			qcom,num-grp-pins = <2>;
 			qcom,pin-func = <0>;
 			label = "cam_sensor_flash";
 			/* active state */
@@ -1099,6 +1106,8 @@
 				bias-pull-down = <0>; /* PULL DOWN */
 			};
 		};
+#endif
+/*comment by congshan end*/
 
 		/* CoreSight */
 		tpiu_seta_1 {
