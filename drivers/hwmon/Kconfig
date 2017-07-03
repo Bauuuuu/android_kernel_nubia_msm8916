@@ -1608,7 +1608,7 @@ menuconfig NUBIA_SENSORS_LSM6DX0
 		To compile this driver as a module, choose M here: the
 		module will be called lsm6dx0.
 
-if ZTEMT_SENSORS_LSM6DX0
+if NUBIA_SENSORS_LSM6DX0
 
 	choice
 	    prompt "LSM6DS0 or LSM6DL0"
@@ -1616,12 +1616,12 @@ if ZTEMT_SENSORS_LSM6DX0
 
 	config SENSORS_LSM6DX0_S_MODEL
 	    boolean "LSM6DS0"
-		depends on ZTEMT_SENSORS_LSM6DX0
+		depends on NUBIA_SENSORS_LSM6DX0
 		help
 		    Select this to enable the LSM6DS0 model to be supported.
 	config SENSORS_LSM6DX0_L_MODEL
 	    boolean "LSM6DL0"
-		depends on ZTEMT_SENSORS_LSM6DX0
+		depends on NUBIA_SENSORS_LSM6DX0
 		select SENSORS_LSM6DX0_LP
 		help
 		    Select this to enable the LSM6DS0 model to be supported.
