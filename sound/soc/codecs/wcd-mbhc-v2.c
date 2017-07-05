@@ -180,7 +180,7 @@ static void wcd_program_btn_threshold(const struct wcd_mbhc *mbhc, bool micbias)
 
 		reg_val = (course << 5) | (fine << 2);
 		snd_soc_update_bits(codec, reg_addr, 0xFC, reg_val);
-		pr_err("%s: course: %d fine: %d reg_addr: %x reg_val: %x\n",
+		pr_debug("%s: course: %d fine: %d reg_addr: %x reg_val: %x\n",
 				__func__, course, fine, reg_addr, reg_val);
 		reg_addr++;
 	}
@@ -485,7 +485,6 @@ static void wcd_mbhc_set_and_turnoff_hph_padac(struct wcd_mbhc *mbhc)
 
 	wg_time = snd_soc_read(codec, MSM8X16_WCD_A_ANALOG_RX_HPH_CNP_WG_TIME);
 	wg_time += 1;
-
 	/* If headphone PA is on, check if userspace receives
 	* removal event to sync-up PA's state */
 #ifdef CONFIG_FEATURE_ZTEMT_AUDIO_EXT_PA
@@ -913,6 +912,11 @@ static bool wcd_check_cross_conn(struct wcd_mbhc *mbhc)
 	enum wcd_mbhc_plug_type plug_type = mbhc->current_plug;
 	s16 reg1;
 
+	if (wcd_swch_level_remove(mbhc)) {
+		pr_debug("%s: Switch level is low\n", __func__);
+		return false;
+	}
+
 	reg1 = snd_soc_read(codec, MSM8X16_WCD_A_ANALOG_MBHC_DET_CTL_2);
 	/*
 	 * Check if there is any cross connection,
@@ -1115,7 +1119,7 @@ static void wcd_correct_swch_plug(struct work_struct *work)
 					 * This is due to GND/MIC switch didn't
 					 * work,  Report unsupported plug.
 					 */
-					pr_debug("%s: switch didnt work\n",
+					pr_debug("%s: switch didnt work,report headset by default\n",
 						  __func__);
 					plug_type = MBHC_PLUG_TYPE_HEADSET;
 					goto report;
@@ -1773,7 +1777,7 @@ irqreturn_t wcd_mbhc_btn_press_handler(int irq, void *data)
 	mbhc->buttons_pressed |= mask;
 	wcd9xxx_spmi_lock_sleep();
 	if (schedule_delayed_work(&mbhc->mbhc_btn_dwork,
-				msecs_to_jiffies(400)) == 0) {
+				msecs_to_jiffies(800)) == 0) {
 		WARN(1, "Button pressed twice without release event\n");
 		wcd9xxx_spmi_unlock_sleep();
 	}
