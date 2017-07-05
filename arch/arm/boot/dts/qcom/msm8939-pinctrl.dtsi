@@ -1664,39 +1664,6 @@
 			};
 		};
 
-		melfas_int_pin {
-			qcom,pins = <&gp 13>;
-			qcom,num-grp-pins = <1>;
-			qcom,pin-func = <0>;
-			label = "melfas_int_pin";
-
-			melfas_int_active: melfas_int_active {
-				drive-strength = <10>;
-				bias-pull-up;
-			};
-
-			melfas_int_suspend: melfas_int_suspend {
-				drive-strength = <2>;
-				bias-pull-up;
-			};
-		};
-		melfas_rst_pin {
-			qcom,pins = <&gp 12>;
-			qcom,num-grp-pins = <1>;
-			qcom,pin-func = <0>;
-			label = "melfas_rst_pin";
-
-			melfas_rst_active: melfas_rst_active {
-				drive-strength = <10>;
-				bias-pull-up;
-			};
-
-			melfas_rst_suspend: melfas_rst_suspend {
-				drive-strength = <2>;
-				bias-disable;
-			};
-		};
-
         // CONFIG_ZTEMT_BQ27520_BATTERY
 	    bq27520_battery_pin {
 			qcom,pins = <&gp 51>, <&gp 114>;
