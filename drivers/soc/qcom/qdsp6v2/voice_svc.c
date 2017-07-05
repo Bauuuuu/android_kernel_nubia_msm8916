@@ -1,4 +1,4 @@
-/* Copyright (c) 2014-2017, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2014-2016, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -42,12 +42,6 @@ struct voice_svc_prvt {
 	struct list_head response_queue;
 	wait_queue_head_t response_wait;
 	spinlock_t response_lock;
-	/*
-	 * This mutex ensures responses are processed in sequential order and
-	 * that no two threads access and free the same response at the same
-	 * time.
-	 */
-	struct mutex response_mutex_lock;
 };
 
 struct apr_data {
@@ -504,7 +498,6 @@ static ssize_t voice_svc_read(struct file *file, char __user *arg,
 		goto done;
 	}
 
-	mutex_lock(&prtd->response_mutex_lock);
 	spin_lock_irqsave(&prtd->response_lock, spin_flags);
 
 	if (list_empty(&prtd->response_queue)) {
@@ -518,7 +511,7 @@ static ssize_t voice_svc_read(struct file *file, char __user *arg,
 			pr_debug("%s: Read timeout\n", __func__);
 
 			ret = -ETIMEDOUT;
-			goto unlock;
+			goto done;
 		} else if (ret > 0 && !list_empty(&prtd->response_queue)) {
 			pr_debug("%s: Interrupt recieved for response\n",
 				 __func__);
@@ -526,7 +519,7 @@ static ssize_t voice_svc_read(struct file *file, char __user *arg,
 			pr_debug("%s: Interrupted by SIGNAL %d\n",
 				 __func__, ret);
 
-			goto unlock;
+			goto done;
 		}
 
 		spin_lock_irqsave(&prtd->response_lock, spin_flags);
@@ -545,7 +538,7 @@ static ssize_t voice_svc_read(struct file *file, char __user *arg,
 		       __func__, count, size);
 
 		ret = -ENOMEM;
-		goto unlock;
+		goto done;
 	}
 
 	if (!access_ok(VERIFY_WRITE, arg, size)) {
@@ -553,7 +546,7 @@ static ssize_t voice_svc_read(struct file *file, char __user *arg,
 		       __func__);
 
 		ret = -EPERM;
-		goto unlock;
+		goto done;
 	}
 
 	ret = copy_to_user(arg, &resp->resp,
@@ -563,7 +556,7 @@ static ssize_t voice_svc_read(struct file *file, char __user *arg,
 		pr_err("%s: copy_to_user failed %d\n", __func__, ret);
 
 		ret = -EPERM;
-		goto unlock;
+		goto done;
 	}
 
 	spin_lock_irqsave(&prtd->response_lock, spin_flags);
@@ -577,8 +570,6 @@ static ssize_t voice_svc_read(struct file *file, char __user *arg,
 
 	ret = count;
 
-unlock:
-	mutex_unlock(&prtd->response_mutex_lock);
 done:
 	return ret;
 }
@@ -634,7 +625,6 @@ static int voice_svc_open(struct inode *inode, struct file *file)
 	INIT_LIST_HEAD(&prtd->response_queue);
 	init_waitqueue_head(&prtd->response_wait);
 	spin_lock_init(&prtd->response_lock);
-	mutex_init(&prtd->response_mutex_lock);
 	file->private_data = (void *)prtd;
 
 	/* Current APR implementation doesn't support session based
@@ -685,7 +675,6 @@ static int voice_svc_release(struct inode *inode, struct file *file)
 			pr_err("%s: Failed to dereg MVM %d\n", __func__, ret);
 	}
 
-	mutex_lock(&prtd->response_mutex_lock);
 	spin_lock_irqsave(&prtd->response_lock, spin_flags);
 
 	while (!list_empty(&prtd->response_queue)) {
@@ -699,9 +688,6 @@ static int voice_svc_release(struct inode *inode, struct file *file)
 	}
 
 	spin_unlock_irqrestore(&prtd->response_lock, spin_flags);
-	mutex_unlock(&prtd->response_mutex_lock);
-
-	mutex_destroy(&prtd->response_mutex_lock);
 
 	kfree(file->private_data);
 	file->private_data = NULL;
