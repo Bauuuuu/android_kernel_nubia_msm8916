@@ -14,6 +14,11 @@ config POWER_SUPPLY_DEBUG
 	  Say Y here to enable debugging messages for power supply class
 	  and drivers.
 
+config ZTEMT_POWER_DEBUG
+	bool "ZTEMT Power Debug Feature"
+	default y
+	help
+	  ZTEMT Power Debug Feature
 config PDA_POWER
 	tristate "Generic PDA/phone power driver"
 	depends on !S390
@@ -371,16 +376,6 @@ config SMB350_CHARGER
 	  The driver supports charger-enable and charger-suspend/resume.
 	  The driver reports the charger status via the power supply framework.
 	  A charger status change triggers an IRQ via the device STAT pin.
-
-config SMB1351_USB_CHARGER
-	tristate "smb1351 usb charger (with VBUS detection)"
-	depends on I2C
-	help
-	 Say Y to enable support for the SMB1351 switching mode based charger.
-	 The driver supports charging control (enable/disable) and
-	 charge-current limiting. It also provides USB VBUS detection and
-	 notification support. The driver controls SMB1351 via I2C and
-	 supports device-tree interface.
 
 config SMB135X_CHARGER
 	tristate "SMB135X Battery Charger"
