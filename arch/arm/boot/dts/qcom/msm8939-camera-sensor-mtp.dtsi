@@ -212,7 +212,7 @@
 		qcom,poll1 = <0 0x0 2 0x0 1 0>;
 		qcom,mem1 = <3 0x0F10 2 0 1 0>;
 
-		/* bpc: insensor bpc */
+		// bpc: insensor bpc 
 		qcom,saddr2 = <0x5A>;
 		qcom,page2 = <1 0x6028 2 0x4000 2 0>;
 		qcom,poll2 = <0 0x0 2 0x0 2 0>;
