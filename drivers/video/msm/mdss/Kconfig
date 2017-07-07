@@ -54,5 +54,5 @@ config ZTEMT_LCD_DISP_PREFERENCES
      bool "LCD disp preferences which include color enhance and color temperature"
      default n
 config ZTEMT_LCD_BACKLIGHT_LINEAR_CONTROL_METHOLD
-     bool "ztemt lcd backlight linear control methold"
+     bool "ztemt lcd backlight linear control method"
      default n

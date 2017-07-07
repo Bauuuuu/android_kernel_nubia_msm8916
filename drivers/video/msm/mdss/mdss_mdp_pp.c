@@ -2859,7 +2859,6 @@ static void pp_read_igc_lut_cached(struct mdp_igc_lut_data *cfg)
 			mdss_pp_res->igc_disp_cfg[disp_num].c2_data[i];
 	}
 }
-
 #ifdef CONFIG_ZTEMT_LCD_DISP_PREFERENCES
 int zte_mdss_pcc_config(struct mdp_pcc_cfg_data *config)
 {
