@@ -22,8 +22,9 @@
 #include <linux/init.h>
 #include <asm/assembler.h>
 
+#ifndef CONFIG_MACH_NUBIA
 #include "proc-macros.S"
-
+#endif
  /*
  *     flush_dcache_louis()
  *

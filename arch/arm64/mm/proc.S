@@ -26,7 +26,9 @@
 #include <asm/pgtable-hwdef.h>
 #include <asm/pgtable.h>
 
+#ifndef CONFIG_MACH_NUBIA
 #include "proc-macros.S"
+#endif
 
 #ifdef CONFIG_ARM64_64K_PAGES
 #define TCR_TG_FLAGS	TCR_TG0_64K | TCR_TG1_64K
